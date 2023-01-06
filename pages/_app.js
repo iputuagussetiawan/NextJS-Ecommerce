@@ -9,11 +9,13 @@ let persistor = persistStore(store);
 export default function App({ Component, pageProps }) {
 
   return (
+    <>
     <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <Component {...pageProps} />
       </PersistGate>
     </Provider>
+    </>
   )
  
  
