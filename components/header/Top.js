@@ -16,52 +16,48 @@ const Top = () => {
             <div>
             </div>
             <ul className={styles.top__list}>
-                <li>
+                <li className={styles.top__item}>
                     <Link href="profile/wishlist"> <span>Indonesia</span></Link>
                 </li>
-                <li>
+                <li className={styles.top__item}>
                     <MdSecurity/>
                     <Link href="profile/wishlist"> <span>Buyer Protection</span></Link>
                 </li>
-                <li>
+                <li className={styles.top__item}>
                     <MdMiscellaneousServices/>
                     <Link href="profile/wishlist"> <span>Customer Service</span></Link>
                 </li>
-                <li>
+                <li className={styles.top__item}>
                     <FiHelpCircle/>
                     <Link href="profile/wishlist"> <span>Help</span></Link>
                 </li>
-                <li>
+                <li className={styles.top__item}>
                     <AiOutlineHeart/>
                     <Link href="./profile/wishlist"> <span>Wishlist</span></Link>
                 </li>
-                <li 
+                <li className={styles.top__item}
                 onMouseOver={()=>setVisible(true)} 
                 onMouseLeave={()=>setVisible(false)}>
                 {loggedIn?(
              
                 <div className={styles.flex}>
                     <img src={"/images/usuario.png"}></img>
+                    
                     <span>Agus S</span>
                     <RiArrowDropDownFill/>
                 </div>
-          
                 ):(
-               
                     <div className={styles.flex}>
                         <RiAccountCircleLine/>
                         <span>Account</span>
                         <RiArrowDropDownFill/>
                     </div>
-              
-                )}
 
+                )}
                 {
                     visible &&  <UserMenu loggedIn={loggedIn}></UserMenu>
                 }
-               
                 </li>
-               
             </ul>
           </div>
     </div>
