@@ -39,7 +39,6 @@ const Top = () => {
                 onMouseOver={()=>setVisible(true)} 
                 onMouseLeave={()=>setVisible(false)}>
                 {loggedIn?(
-             
                 <div className={styles.flex}>
                     <img src={"/images/usuario.png"}></img>
                     
@@ -52,7 +51,6 @@ const Top = () => {
                         <span>Account</span>
                         <RiArrowDropDownFill/>
                     </div>
-
                 )}
                 {
                     visible &&  <UserMenu loggedIn={loggedIn}></UserMenu>
@@ -63,5 +61,4 @@ const Top = () => {
     </div>
   )
 }
-
 export default Top
