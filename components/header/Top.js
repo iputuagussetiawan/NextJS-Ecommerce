@@ -7,7 +7,7 @@ import Link from "next/link"
 import { useState } from "react"
 import UserMenu from "./UserMenu"
 
-const Top = () => {
+const Top = ({country}) => {
     const [loggedIn,setLoggedIn]=useState(true);
     const [visible,setVisible]=useState(false);
   return (
@@ -17,7 +17,8 @@ const Top = () => {
             </div>
             <ul className={styles.top__list}>
                 <li className={styles.top__item}>
-                    <Link href="profile/wishlist"> <span>Indonesia</span></Link>
+                    <img src={country.flag}></img>
+                    <Link href="profile/wishlist"> <span>{country.name}</span></Link>
                 </li>
                 <li className={styles.top__item}>
                     <MdSecurity/>
