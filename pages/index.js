@@ -12,6 +12,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({country}) {
 	const { data: session } = useSession()
+	
 	return (
 		<div>
 			<Header country={country}/>
