@@ -6,9 +6,10 @@ import {RiAccountCircleLine, RiArrowDropDownFill} from 'react-icons/ri'
 import Link from "next/link"
 import { useState } from "react"
 import UserMenu from "./UserMenu"
+import { useSession } from "next-auth/react"
 
 const Top = ({country}) => {
-    const [loggedIn,setLoggedIn]=useState(true);
+    const {data:session}=useSession();
     const [visible,setVisible]=useState(false);
   return (
     <div className={styles.top}>
@@ -39,11 +40,11 @@ const Top = ({country}) => {
                 <li className={styles.top__item}
                 onMouseOver={()=>setVisible(true)} 
                 onMouseLeave={()=>setVisible(false)}>
-                {loggedIn?(
+                {session?(
                 <div className={styles.flex}>
-                    <img src={"/images/usuario.png"}></img>
+                    <img src={session.user.image}></img>
                     
-                    <span>Agus S</span>
+                    <span>{session.user.name}</span>
                     <RiArrowDropDownFill/>
                 </div>
                 ):(
@@ -54,7 +55,7 @@ const Top = ({country}) => {
                     </div>
                 )}
                 {
-                    visible &&  <UserMenu loggedIn={loggedIn}></UserMenu>
+                    visible &&  <UserMenu session={session}></UserMenu>
                 }
                 </li>
             </ul>
