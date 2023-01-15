@@ -6,12 +6,17 @@ import Header from '../components/header'
 import Footer from '../components/footer'
 import axios from 'axios'
 
+import { useSession, signIn, signOut } from "next-auth/react"
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({country}) {
+	const { data: session } = useSession()
 	return (
 		<div>
 			<Header country={country}/>
+			{
+				session? "you are login" : "You are not login"}
 			<Footer country={country}/>
 		</div>
 	)
@@ -31,7 +36,7 @@ export async function getServerSideProps() {
 	return{
 		props:{
 			// country: { name: data.name, flag: data.flag.emojitwo },
-			country: { name: "Indonesia", flag: "https://cdn-icons-png.flaticon.com/512/197/197551.png?w=360",},
+			country: { name: "Indonesia", flag: "./images/indonesia.png",},
 		}
 	}
 }
