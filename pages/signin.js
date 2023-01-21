@@ -24,7 +24,8 @@ const initialvalues={
   password: "",
   conf_password: "",
 	success:"",
-	error:""
+	error:"",
+	login_error:""
 }
 export default function signin({providers}) {
 	const [loading, setLoading] = useState(false);
@@ -37,7 +38,8 @@ export default function signin({providers}) {
 		password,
 		conf_password,
 		success,
-		error}=user;
+		error,
+		login_error,}=user;
 	const handleChange=(e)=>{
 		const {name,value}=e.target;
 		setUser({...user,[name]:value});
@@ -82,13 +84,37 @@ export default function signin({providers}) {
         password,
       });
       setUser({ ...user, error: "", success: data.message });
-      setLoading(false);
-			setTimeout(async () => {
+			setLoading(false);
+      setTimeout(async () => {
+        let options = {
+          redirect: false,
+          email: email,
+          password: password,
+        };
+        const res = await signIn("credentials", options);
         Router.push("/");
       }, 2000);
     } catch (error) {
       setLoading(false);
       setUser({ ...user, success: "", error: error.response.data.message });
+    }
+  };
+
+	const signInHandler = async () => {
+    setLoading(true);
+    let options = {
+      redirect: false,
+      email: login_email,
+      password: login_password,
+    };
+    const res = await signIn("credentials", options);
+    setUser({ ...user, success: "", error: "" });
+    setLoading(false);
+    if (res?.error) {
+      setLoading(false);
+      setUser({ ...user, login_error: res?.error });
+    } else {
+      return Router.push("/");
     }
   };
 
@@ -102,10 +128,10 @@ export default function signin({providers}) {
 			<div className={styles.login}>
 				<div className={styles.login__container}>
 					<div className={styles.login__header}>
-<div className={styles.back__svg}>
-	<BiLeftArrowAlt></BiLeftArrowAlt>
-</div>
-<span> We'd happy to join us ! <Link href="/">Go Store</Link></span>
+						<div className={styles.back__svg}>
+							<BiLeftArrowAlt></BiLeftArrowAlt>
+						</div>
+						<span> We'd happy to join us ! <Link href="/">Go Store</Link></span>
 					</div>
 					<div className={styles.login__form}>
 						<h1>Sign in</h1>
@@ -140,6 +166,9 @@ export default function signin({providers}) {
 														onChange={handleChange}
 												/>
 												<CircledIconBtn type="submit" text="Sign in" />
+												{login_error && (
+													<span className={styles.error}>{login_error}</span>
+												)}
 												<div className={styles.forgot}>
 														<Link href="/auth/forgot">Forgot password ?</Link>
 												</div>
