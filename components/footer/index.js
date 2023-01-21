@@ -5,7 +5,7 @@ import Payment from './Payment'
 import Social from './Social'
 import styles from './styles.module.scss'
 
-export default function Footer({country}) {
+export default function Footer() {
   return (
     <footer className={styles.footer}>
         <div className={styles.footer__container}>
@@ -13,7 +13,7 @@ export default function Footer({country}) {
             <Social></Social>
             <NewsLetter></NewsLetter>
             <Payment></Payment>
-            <Copyright country={country}></Copyright>
+            <Copyright></Copyright>
         </div>
     </footer>
   )

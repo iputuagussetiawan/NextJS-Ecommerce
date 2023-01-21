@@ -18,8 +18,8 @@ const Top = ({country}) => {
             </div>
             <ul className={styles.top__list}>
                 <li className={styles.top__item}>
-                    <img src={country.flag}></img>
-                    <Link href="profile/wishlist"> <span>{country.name}</span></Link>
+                    <img src=""></img>
+                    <Link href="profile/wishlist"> <span>Indonesia</span></Link>
                 </li>
                 <li className={styles.top__item}>
                     <MdSecurity/>
