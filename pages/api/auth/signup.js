@@ -1,6 +1,9 @@
 import nc from "next-connect";
+import bcrypt from "bcrypt";
+import User from "../../../models/User";
 import db from "../../../utils/db"
 import { validateEmail } from "../../../utils/validation";
+import { createActivationToken } from "../../../utils/token";
 const handler = nc();
 
 handler.post(async(req,res)=>{
@@ -14,6 +17,25 @@ handler.post(async(req,res)=>{
         if(!validateEmail(email)){
             return res.status(400).json({message:"Invalid Email"});
         }
+
+        const user= await User.findOne({email:email})
+
+        if(user){
+            return res.status(400).json({message:"This Email already exsist "});
+        }
+        if(password.length<6){
+            return res.status(400).json({message:"Password must be atleast 6 characters"});
+        }
+
+        const cryptedPassword=await bcrypt.hash(password,12)
+        const newUser=new User({name,email,password:cryptedPassword})
+        const addedUser = await newUser.save();
+        const activation_token=createActivationToken({
+            id:addedUser._id.toString(),
+        })
+        console.log(activation_token)
+        res.send(activation_token)
+
     } catch (error) {
         res.status(500).json({message:error.message})
     }
