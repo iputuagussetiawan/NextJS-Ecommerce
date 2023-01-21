@@ -9,10 +9,12 @@ import LoginInput from '../components/inputs/loginInput'
 import { useState } from 'react'
 import CircledIconBtn from '../components/buttons/circledIconBtn'
 import axios from "axios";
+import Router from "next/router";
 import {
   getProviders,
 	signIn
 } from "next-auth/react";
+import DotLoaderSpinner from '../components/loaders/dotLoader'
 
 const initialvalues={
 	login_email:"",
@@ -23,10 +25,7 @@ const initialvalues={
   conf_password: "",
 	success:"",
 	error:""
-
 }
-
-
 export default function signin({providers}) {
 	const [loading, setLoading] = useState(false);
 	const [user, setUser]=useState(initialvalues);
@@ -84,6 +83,9 @@ export default function signin({providers}) {
       });
       setUser({ ...user, error: "", success: data.message });
       setLoading(false);
+			setTimeout(async () => {
+        Router.push("/");
+      }, 2000);
     } catch (error) {
       setLoading(false);
       setUser({ ...user, success: "", error: error.response.data.message });
@@ -93,6 +95,9 @@ export default function signin({providers}) {
 
 	return (
     <>
+		{
+			loading && <DotLoaderSpinner loading={loading}/>
+		}
 		<Header></Header>
 			<div className={styles.login}>
 				<div className={styles.login__container}>
@@ -217,9 +222,8 @@ export default function signin({providers}) {
 												</Form>
 										)}
 								</Formik>
-
-								<div>{error && <span>{error}</span>}</div>
-								<div>{success && <span>{success}</span>}</div>
+								<div>{success && <span className={styles.success}>{success}</span>}</div>
+            		<div>{error && <span className={styles.error}>{error}</span>}</div>
 						</div>
 				</div>
 			</div>
