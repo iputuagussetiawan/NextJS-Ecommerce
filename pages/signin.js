@@ -11,8 +11,11 @@ import CircledIconBtn from '../components/buttons/circledIconBtn'
 import axios from "axios";
 import Router from "next/router";
 import {
-  getProviders,
-	signIn
+	getCsrfToken,
+	getProviders,
+	getSession,
+	signIn,
+	country,
 } from "next-auth/react";
 import DotLoaderSpinner from '../components/loaders/dotLoader'
 
@@ -27,7 +30,7 @@ const initialvalues={
 	error:"",
 	login_error:""
 }
-export default function signin({providers}) {
+export default function signin({providers,callbackUrl,csrfToken}) {
 	const [loading, setLoading] = useState(false);
 	const [user, setUser]=useState(initialvalues);
 	const {
@@ -114,7 +117,7 @@ export default function signin({providers}) {
       setLoading(false);
       setUser({ ...user, login_error: res?.error });
     } else {
-      return Router.push("/");
+		return Router.push(callbackUrl || "/");
     }
   };
 
@@ -150,7 +153,12 @@ export default function signin({providers}) {
 									}}
 								>
 										{(form) => (
-												<Form>
+												<Form method="post" action="/api/auth/signin/email">
+												<input
+													type="hidden"
+													name="csrfToken"
+													defaultValue={csrfToken}
+												/>
 												<LoginInput
 														type="text"
 														name="login_email"
@@ -195,8 +203,8 @@ export default function signin({providers}) {
 											);
 										})}
 									</div>
-            		</div>
-						</div>
+            					</div>
+					</div>
 				</div>
 				<div className={styles.login__container}>
 					<div className={styles.login__form}>
@@ -261,8 +269,24 @@ export default function signin({providers}) {
   )
 }
 export async function getServerSideProps(context) {
+	const { req, query } = context;
+	const session = await getSession({ req });
+	const { callbackUrl } = query;
+	if (session) {
+		return {
+		  redirect: {
+			destination: callbackUrl,
+		  },
+		};
+	}
+	const csrfToken = await getCsrfToken(context);
+
 	const providers = Object.values(await getProviders());
 	return{
-		props:{providers}
+		props: {
+			providers,
+			csrfToken,
+			callbackUrl,
+		},
 	}
 }
