@@ -8,6 +8,7 @@ import { Formik, Form } from 'formik'
 import LoginInput from '../components/inputs/loginInput'
 import { useState } from 'react'
 import CircledIconBtn from '../components/buttons/circledIconBtn'
+import axios from "axios";
 import {
   getProviders,
 	signIn
@@ -20,11 +21,14 @@ const initialvalues={
   email: "",
   password: "",
   conf_password: "",
+	success:"",
+	error:""
+
 }
 
 
 export default function signin({providers}) {
-	console.log(providers)
+	const [loading, setLoading] = useState(false);
 	const [user, setUser]=useState(initialvalues);
 	const {
 		login_email,
@@ -32,7 +36,9 @@ export default function signin({providers}) {
 		name,
 		email,
 		password,
-		conf_password}=user;
+		conf_password,
+		success,
+		error}=user;
 	const handleChange=(e)=>{
 		const {name,value}=e.target;
 		setUser({...user,[name]:value});
@@ -68,7 +74,23 @@ export default function signin({providers}) {
       .oneOf([Yup.ref("password")], "Passwords must match."),
   });
 
-	
+	const signUpHandler = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post("/api/auth/signup", {
+        name,
+        email,
+        password,
+      });
+      setUser({ ...user, error: "", success: data.message });
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setUser({ ...user, success: "", error: error.response.data.message });
+    }
+  };
+
+
 	return (
     <>
 		<Header></Header>
@@ -158,7 +180,7 @@ export default function signin({providers}) {
 									}}
 									validationSchema={registerValidation}
 									onSubmit={() => {
-										signInHandler();
+										signUpHandler();
 									}}
 								>
 										{(form) => (
@@ -192,11 +214,12 @@ export default function signin({providers}) {
 														onChange={handleChange}
 												/>
 												<CircledIconBtn type="submit" text="Sign Up" />
-												
 												</Form>
 										)}
 								</Formik>
-							
+
+								<div>{error && <span>{error}</span>}</div>
+								<div>{success && <span>{success}</span>}</div>
 						</div>
 				</div>
 			</div>
