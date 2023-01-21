@@ -64,6 +64,15 @@ export default NextAuth({
     })
    
   ],
+  callbacks: {
+    async session({ session, token }) {
+      let user = await User.findById(token.sub);
+      session.user.id = token.sub || user._id.toSting();
+      session.user.role = user.role || "user";
+      token.role = user.role || "user";
+      return session;
+    },
+  },
   pages:{
     signIn:"/signin",
   },
