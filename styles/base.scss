@@ -6,6 +6,10 @@ $primary-color:greenyellow;
 $light-error-color: #fd010169;
 $error-color: #ed4337;
 $grey-color: #f8f8f8;
+$light-error-color: #fd010169;
+$error-color: #ed4337;
+$error-secondary-color: #f02f2fd8;
+$success-color: #6cc070;
 .btn_primary{
     display: flex;
     align-items: center;
@@ -29,4 +33,13 @@ $grey-color: #f8f8f8;
     width: 100%;
     border-radius: 2px;
    
+}
+
+.error {
+    padding: 10px;
+    color: $error-color;
+}
+.success {
+    padding: 10px;
+    color: $success-color;
 }
