@@ -3,9 +3,9 @@ import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.scss'
 import Header from '../components/header'
+import Main from '../components/home/main'
 import Footer from '../components/footer'
 import axios from 'axios'
-
 import { useSession, signIn, signOut } from "next-auth/react"
 
 const inter = Inter({ subsets: ['latin'] })
@@ -14,12 +14,15 @@ export default function Home({country}) {
 	const { data: session } = useSession()
 	console.log(session);
 	return (
-		<div>
+		<>
 			<Header country={country}/>
-			{
-				session? "you are login" : "You are not login"}
+				<div className={styles.home}>
+					<div className={styles.container}>
+						<Main></Main>
+					</div>
+				</div>
 			<Footer country={country}/>
-		</div>
+		</>
 	)
 }
 
