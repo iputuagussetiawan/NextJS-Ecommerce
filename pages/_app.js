@@ -1,4 +1,5 @@
 import '../styles/globals.scss'
+import "../styles/basic-swiper.scss"
 import { Provider } from 'react-redux'
 import store from "../store";
 import { PersistGate } from "redux-persist/integration/react";
