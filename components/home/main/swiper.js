@@ -33,7 +33,7 @@ export default function MainSwiper() {
         className="mainSwiper"
         style={{ width: "100%" }}
       >
-        {[...Array(3).keys()].map((i) => (
+        {[...Array(5).keys()].map((i) => (
           <SwiperSlide>
             <img src={`../../../images/swiper/${i + 1}.jpg`} alt="" />
           </SwiperSlide>
