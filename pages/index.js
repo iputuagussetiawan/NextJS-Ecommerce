@@ -27,15 +27,15 @@ export default function Home({country}) {
 }
 
 export async function getServerSideProps() {
-  	let data = await axios
-    .get("https://api.ipregistry.co/?key=qkthx9jvql9h2gyc")
-    .then((res) => {
-    	return res.data.location.country;
-    })
-    .catch((err) => {
-      	console.log(err);
-    });
-	console.log(data);
+  	// let data = await axios
+    // .get("https://api.ipregistry.co/?key=qkthx9jvql9h2gyc")
+    // .then((res) => {
+    // 	return res.data.location.country;
+    // })
+    // .catch((err) => {
+    //   	console.log(err);
+    // });
+	// console.log(data);
 
 	return{
 		props:{
