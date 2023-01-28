@@ -9,7 +9,7 @@ import axios from 'axios'
 import { useSession, signIn, signOut } from "next-auth/react"
 import FlashDeals from '../components/home/flashDeals'
 import Category from '../components/home/category'
-import { women_accessories, women_dresses, women_shoes, women_swiper } from '../data/home'
+import { gamingSwiper, women_accessories, women_dresses, women_shoes, women_swiper,homeImprovSwiper } from '../data/home'
 import { useMediaQuery } from "react-responsive";
 import ProductsSwiper from '../components/productsSwiper'
 
@@ -53,7 +53,9 @@ export default function Home({country}) {
 							background="#000"
 							/>
 						</div>
-						<ProductsSwiper products={women_swiper}></ProductsSwiper>
+						<ProductsSwiper products={women_swiper} header="Women Swiper"></ProductsSwiper>
+						<ProductsSwiper products={gamingSwiper} header="For Gamers"></ProductsSwiper>
+						<ProductsSwiper products={homeImprovSwiper} header="House Improvements"></ProductsSwiper>
 					</div>
 				</div>
 			<Footer country={country}/>
