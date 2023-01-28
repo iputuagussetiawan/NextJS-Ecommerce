@@ -12,10 +12,13 @@ import Category from '../components/home/category'
 import { gamingSwiper, women_accessories, women_dresses, women_shoes, women_swiper,homeImprovSwiper } from '../data/home'
 import { useMediaQuery } from "react-responsive";
 import ProductsSwiper from '../components/productsSwiper'
+import db from "../utils/db";
+import Product from "../models/Product"
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home({country}) {
+export default function Home({country, products}) {
+	console.log("Products", products);
 	const { data: session } = useSession()
 	console.log(session);
 	const isMedium = useMediaQuery({ query: "(max-width:850px)" });
@@ -64,6 +67,11 @@ export default function Home({country}) {
 }
 
 export async function getServerSideProps() {
+	db.connectDb();
+
+	let products = await Product.find().sort({createAt:-1}).lean();
+	console.log(products);
+	
   	// let data = await axios
     // .get("https://api.ipregistry.co/?key=qkthx9jvql9h2gyc")
     // .then((res) => {
@@ -74,8 +82,11 @@ export async function getServerSideProps() {
     // });
 	// console.log(data);
 
+	
+
 	return{
 		props:{
+			products:JSON.parse(JSON.stringify(products)) ,
 			// country: { name: data.name, flag: data.flag.emojitwo },
 			country: { name: "Indonesia", flag: "./images/indonesia.png",},
 		}
