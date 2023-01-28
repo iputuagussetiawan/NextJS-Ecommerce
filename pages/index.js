@@ -10,12 +10,15 @@ import { useSession, signIn, signOut } from "next-auth/react"
 import FlashDeals from '../components/home/flashDeals'
 import Category from '../components/home/category'
 import { women_accessories, women_dresses, women_shoes } from '../data/home'
+import { useMediaQuery } from "react-responsive";
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home({country}) {
 	const { data: session } = useSession()
 	console.log(session);
+	const isMedium = useMediaQuery({ query: "(max-width:850px)" });
+	const isMobile = useMediaQuery({ query: "(max-width:550px)" });
 	return (
 		<>
 			<Header country={country}/>
@@ -24,9 +27,30 @@ export default function Home({country}) {
 						<Main></Main>
 						<FlashDeals></FlashDeals>
 						<div className={styles.home__category}>
-							<Category header="Dressess" products={women_dresses} background='#5a31f4'></Category>
-							<Category header="Shoes/ Hight Heels" products={women_shoes} background='#3c811f'></Category>
-							<Category header="Dressess" products={women_accessories} background='#000000'></Category>
+							<Category
+							header="Dresses"
+							products={women_dresses}
+							background="#5a31f4"
+							/>
+							{!isMedium && (
+							<Category
+								header="Shoes"
+								products={women_shoes}
+								background="#3c811f"
+							/>
+							)}
+							{isMobile && (
+							<Category
+								header="Shoes"
+								products={women_shoes}
+								background="#3c811f"
+							/>
+							)}
+							<Category
+							header="Accessories"
+							products={women_accessories}
+							background="#000"
+							/>
 						</div>
 					</div>
 				</div>
