@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { useEffect } from "react";
 import { useState } from "react";
+import ProductSwiper from "./ProductSwiper";
 import styles from "./styles.module.scss";
 
 export default function ProductCard({product}) {
@@ -32,7 +34,13 @@ export default function ProductCard({product}) {
     );
   }, [active, product]);
   return (
-    <div>index</div>
+    <div className={styles.product}>
+      <Link href={`/product/${product.slug}?style=${active}`}>
+        <div>
+            <ProductSwiper images={images}></ProductSwiper>
+        </div>
+      </Link>
+    </div>
   )
 }
 
