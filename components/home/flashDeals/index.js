@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import { MdFlashOn } from "react-icons/md";
-// import Countdown from "../../countdown";
+import Countdown from "../../countdown";
 import { useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -19,6 +19,7 @@ export default function FlashDeals() {
           FLASH SALE
           <MdFlashOn />
         </h1>
+        <Countdown date={new Date(2022, 12, 30)} />
       </div>
       <Swiper
         slidesPerView={1}
