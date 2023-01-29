@@ -1,11 +1,40 @@
 import styles from '../../styles/product.module.scss'
 import db from "../../utils/db";
 import Product from "../../models/Product";
+import Category from "../../models/Category";
+import SubCategory from "../../models/SubCategory";
+// import User from "../../models/User";
+import Head from "next/head";
+import Header from "../../components/header";
+import Footer from "../../components/footer";
 
 export default function product({product}) {
     console.log(product)
   return (
-    <div>[slug]</div>
+    <>
+      <Head>
+        <title>{product.name}</title>
+      </Head>
+      <Header />
+      <div className={styles.product}>
+        <div className={styles.product__container}>
+          <div className={styles.path}>
+            Home / {product.category.name}
+            {product.subCategories.map((sub) => (
+              <span>/{sub.name}</span>
+            ))}
+          </div>
+          <div className={styles.product__main}>
+           
+          </div>
+         
+          {/*
+          <ProductsSwiper products={related} />
+          */}
+        </div>
+      </div>
+      <Footer></Footer>
+    </>
   )
 }
 
@@ -18,8 +47,8 @@ export async function getServerSideProps(context) {
 
     //------------
     let product = await Product.findOne({ slug })
-    // .populate({ path: "category", model: Category })
-    // .populate({ path: "subCategories", model: SubCategory })
+    .populate({ path: "category", model: Category })
+    .populate({ path: "subCategories", model: SubCategory })
     // .populate({ path: "reviews.reviewBy", model: User })
     .lean();
     let subProduct = product.subProducts[style];
