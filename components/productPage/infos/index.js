@@ -7,6 +7,7 @@ import Link from "next/Link";
 import { TbPlus, TbMinus } from "react-icons/tb";
 import { BsHandbagFill, BsHeart } from "react-icons/bs";
 import Share from "./share";
+import Accordian from "./Accordian";
 
 export default function Infos({ product, setActiveImg }) {
     const router = useRouter();
@@ -123,6 +124,7 @@ export default function Infos({ product, setActiveImg }) {
                 </button>
             </div>
             <Share />
+            <Accordian details={[product.description, ...product.details]} />
          </div>
     </div>
   )
