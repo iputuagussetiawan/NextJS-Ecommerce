@@ -7,8 +7,11 @@ import SubCategory from "../../models/SubCategory";
 import Head from "next/head";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
+import MainSwiper from "../../components/productPage/mainSwiper";
+import { useState } from "react";
 
 export default function product({product}) {
+  const [activeImg, setActiveImg] = useState("");
     console.log(product)
   return (
     <>
@@ -25,7 +28,7 @@ export default function product({product}) {
             ))}
           </div>
           <div className={styles.product__main}>
-           
+            <MainSwiper images={product.images} activeImg={activeImg} />
           </div>
          
           {/*
