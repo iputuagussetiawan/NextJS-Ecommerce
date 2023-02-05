@@ -28,6 +28,7 @@ export default function TableHeader({ reviews, allSizes, colors }) {
       />
       <TableSelect
         property={order}
+        
         text="Order"
         data={orderOptions.filter((x) => x.value !== order)}
         handleChange={setOrder}
