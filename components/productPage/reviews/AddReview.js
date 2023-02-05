@@ -5,6 +5,7 @@ import styles from "./styles.module.scss";
 
 export default function AddReview({ product, setReviews }) {
     const [size, setSize] = useState("");
+    const [style, setStyle] = useState("");
   return (
     <div className={styles.reviews__add}>
         <div className={styles.reviews__add_wrap}>
@@ -14,6 +15,12 @@ export default function AddReview({ product, setReviews }) {
                 text="Size"
                 data={product.allSizes.filter((x) => x.size !== size)}
                 handleChange={setSize}
+            />
+            <Select
+                property={style}
+                text="Style"
+                data={product.colors.filter((x) => x !== style)}
+                handleChange={setStyle}
             />
             </div>
         </div>
