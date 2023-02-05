@@ -10,6 +10,7 @@ import Footer from "../../components/footer";
 import MainSwiper from "../../components/productPage/mainSwiper";
 import { useState } from "react";
 import Infos from '../../components/productPage/infos';
+import Reviews from '../../components/productPage/reviews';
 
 export default function product({product}) {
   const [activeImg, setActiveImg] = useState("");
@@ -32,6 +33,7 @@ export default function product({product}) {
             <MainSwiper images={product.images} activeImg={activeImg} />
             <Infos product={product} setActiveImg={setActiveImg} />
           </div>
+          <Reviews product={product} ></Reviews>
          
           {/*
           <ProductsSwiper products={related} />
@@ -92,10 +94,39 @@ export async function getServerSideProps(context) {
             : subProduct.sizes[size].price,
         priceBefore: subProduct.sizes[size].price,
         quantity: subProduct.sizes[size].qty,
+        ratings: [
+          {
+            percentage: calculatePercentage("5"),
+          },
+          {
+            percentage: calculatePercentage("4"),
+          },
+          {
+            percentage: calculatePercentage("3"),
+          },
+          {
+            percentage: calculatePercentage("2"),
+          },
+          {
+            percentage: calculatePercentage("1"),
+          },
+        ],
         
       };
 
      console.log("New Product",newProduct)
+    function calculatePercentage(num) {
+      return (
+        (product.reviews.reduce((a, review) => {
+          return (
+            a +
+            (review.rating == Number(num) || review.rating == Number(num) + 0.5)
+          );
+        }, 0) *
+          100) /
+        product.reviews.length
+      ).toFixed(1);
+    }
     //------------
     db.disconnectDb();
     return {
