@@ -9,6 +9,7 @@ import { BsHandbagFill, BsHeart } from "react-icons/bs";
 import Share from "./share";
 import Accordian from "./Accordian";
 import SimillarSwiper from "./SimillarSwiper";
+import axios from "axios";
 
 export default function Infos({ product, setActiveImg }) {
     const router = useRouter();
@@ -23,6 +24,46 @@ export default function Infos({ product, setActiveImg }) {
           setQty(product.quantity);
         }
     }, [router.query.size]);
+
+    const addToCartHandler = async () => {
+        // if (!router.query.size) {
+        //   setError("Please Select a size");
+        //   return;
+        // }
+        const { data } = await axios.get(
+          `/api/product/${product._id}?style=${product.style}&size=${router.query.size}`
+        );
+        console.log("data---->", data)
+        // if (qty > data.quantity) {
+        //   setError(
+        //     "The Quantity you have choosed is more than in stock. Try and lower the Qty"
+        //   );
+        // } else if (data.quantity < 1) {
+        //   setError("This Product is out of stock.");
+        //   return;
+        // } else {
+        //   let _uid = `${data._id}_${product.style}_${router.query.size}`;
+        //   let exist = cart.cartItems.find((p) => p._uid === _uid);
+        //   if (exist) {
+        //     let newCart = cart.cartItems.map((p) => {
+        //       if (p._uid == exist._uid) {
+        //         return { ...p, qty: qty };
+        //       }
+        //       return p;
+        //     });
+        //     dispatch(updateCart(newCart));
+        //   } else {
+        //     dispatch(
+        //       addToCart({
+        //         ...data,
+        //         qty,
+        //         size: data.size,
+        //         _uid,
+        //       })
+        //     );
+        //   }
+        // }
+    };
   return (
     <div className={styles.infos}>
          <div className={styles.infos__container}>
