@@ -10,11 +10,20 @@ import Share from "./share";
 import Accordian from "./Accordian";
 import SimillarSwiper from "./SimillarSwiper";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, updateCart } from "../../../store/cartSlice";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Infos({ product, setActiveImg }) {
     const router = useRouter();
+    const dispatch = useDispatch();
+    const { data: session } = useSession();
     const [size, setSize] = useState(router.query.size);
     const [qty, setQty] = useState(1);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+    const { cart } = useSelector((state) => ({ ...state }));
+    console.log(cart);
     useEffect(() => {
         setSize("");
         setQty(1);
@@ -26,43 +35,45 @@ export default function Infos({ product, setActiveImg }) {
     }, [router.query.size]);
 
     const addToCartHandler = async () => {
-        // if (!router.query.size) {
-        //   setError("Please Select a size");
-        //   return;
-        // }
+        if (!router.query.size) {
+          setError("Please Select a size");
+          return;
+        }
         const { data } = await axios.get(
           `/api/product/${product._id}?style=${product.style}&size=${router.query.size}`
         );
-        console.log("data---->", data)
-        // if (qty > data.quantity) {
-        //   setError(
-        //     "The Quantity you have choosed is more than in stock. Try and lower the Qty"
-        //   );
-        // } else if (data.quantity < 1) {
-        //   setError("This Product is out of stock.");
-        //   return;
-        // } else {
-        //   let _uid = `${data._id}_${product.style}_${router.query.size}`;
-        //   let exist = cart.cartItems.find((p) => p._uid === _uid);
-        //   if (exist) {
-        //     let newCart = cart.cartItems.map((p) => {
-        //       if (p._uid == exist._uid) {
-        //         return { ...p, qty: qty };
-        //       }
-        //       return p;
-        //     });
-        //     dispatch(updateCart(newCart));
-        //   } else {
-        //     dispatch(
-        //       addToCart({
-        //         ...data,
-        //         qty,
-        //         size: data.size,
-        //         _uid,
-        //       })
-        //     );
-        //   }
-        // }
+        console.log(data);
+        if (qty > data.quantity) {
+          setError(
+            "The Quantity you have choosed is more than in stock. Try and lower the Qty"
+          );
+        } else if (data.quantity < 1) {
+          setError("This Product is out of stock.");
+          return;
+        } else {
+            let _uid = `${product._id}_${product.style}_${router.query.size}`;
+            console.log(_uid)
+            console.log(cart)
+            let exist = cart.cartItems.find((p) => p._uid === _uid);
+            if (exist) {
+                let newCart = cart.cartItems.map((p) => {
+                if (p._uid == exist._uid) {
+                    return { ...p, qty: qty };
+                }
+                return p;
+                });
+                dispatch(updateCart(newCart));
+            } else {
+                dispatch(
+                    addToCart({
+                        ...data,
+                        qty,
+                        size: data.size,
+                        _uid,
+                    })
+                );
+            }
+        }
     };
   return (
     <div className={styles.infos}>
@@ -165,6 +176,7 @@ export default function Infos({ product, setActiveImg }) {
                     WISHLIST
                 </button>
             </div>
+            {error && <span className={styles.error}>{error}</span>}
             <Share />
             <Accordian details={[product.description, ...product.details]} />
             <SimillarSwiper />
