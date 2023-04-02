@@ -149,24 +149,24 @@ export default function Sidebar() {
                         }`}
                     >
                         <li>
-                        <Link href="">
-                            <RiSettingsLine />
-                        </Link>
+                            <Link href="">
+                                <RiSettingsLine />
+                            </Link>
                         </li>
                         <li>
-                        <Link href="">
-                            <IoNotificationsSharp />
-                        </Link>
+                            <Link href="">
+                                <IoNotificationsSharp />
+                            </Link>
                         </li>
                         <li>
-                        <Link href="">
-                            <AiFillMessage />
-                        </Link>
+                            <Link href="">
+                                <AiFillMessage />
+                            </Link>
                         </li>
                         <li>
-                        <Link href="">
-                            <RiLogoutCircleFill />
-                        </Link>
+                            <Link href="">
+                                <RiLogoutCircleFill />
+                            </Link>
                         </li>
                     </ul>
                 </nav>
