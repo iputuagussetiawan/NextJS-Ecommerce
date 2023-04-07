@@ -27,5 +27,32 @@ handler.post(async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-
+handler.delete(async (req, res) => {
+    try {
+        const { id } = req.body;
+        db.connectDb();
+        await Category.findByIdAndRemove(id);
+        db.disconnectDb();
+        return res.json({
+            message: "Category has been deleted successfuly",
+            categories: await Category.find({}).sort({ updatedAt: -1 }),
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+handler.put(async (req, res) => {
+    try {
+        const { id, name } = req.body;
+        db.connectDb();
+        await Category.findByIdAndUpdate(id, { name });
+        db.disconnectDb();
+        return res.json({
+            message: "Category has been updated successfuly",
+            categories: await Category.find({}).sort({ createdAt: -1 }),
+        });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 export default handler;
