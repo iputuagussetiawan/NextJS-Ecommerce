@@ -22,9 +22,6 @@ export default function Create({ setCoupons }) {
     const handleEndDate = (newValue) => {
         setEndDate(newValue);
     };
-
-    console.log(startDate, endDate)
-    
     const validate = Yup.object({
         name: Yup.string()
             .required("Coupon name is required.")
