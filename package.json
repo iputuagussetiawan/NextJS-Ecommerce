@@ -21,6 +21,7 @@
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cloudinary": "^1.35.0",
+    "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
     "express-fileupload": "^1.4.0",
     "formik": "^2.2.9",
