@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import ListItemText from "@material-ui/core/ListItemText";
-import Select from "@material-ui/core/Select";
-import Checkbox from "@material-ui/core/Checkbox";
-import Chip from "@material-ui/core/Chip";
+import { makeStyles, useTheme } from '@mui/styles';
+import { Input } from '@mui/material';
+import { InputLabel } from '@mui/material';
+import { MenuItem } from '@mui/material';
+import { FormControl } from '@mui/material';
+import { ListItemText } from '@mui/material';
+import Select from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
+import Chip from '@mui/material/Chip';
 import styles from "./styles.module.scss";
 import { useField, Field, ErrorMessage } from "formik";
 const useStyles = makeStyles((theme) => ({
     formControl: {
-        margin: theme.spacing(1),
+        //margin: theme.spacing(1),
         minWidth: 120,
         width: "100%",
     },
@@ -92,9 +92,9 @@ export default function MultipleSelect({
                         <div className={classes.chips}>
                             {selected.map((value) => (
                                 <Chip
-                                key={value}
-                                label={result[value]}
-                                className={classes.chip}
+                                    key={value}
+                                    label={result[value]}
+                                    className={classes.chip}
                                 />
                             ))}
                         </div>
