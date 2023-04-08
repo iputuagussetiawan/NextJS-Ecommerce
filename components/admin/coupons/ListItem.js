@@ -4,16 +4,32 @@ import { useState } from "react";
 import { AiFillDelete, AiTwotoneEdit } from "react-icons/ai";
 import { toast } from "react-toastify";
 import styles from "./styles.module.scss";
+import { LocalizationProvider,DesktopDatePicker  } from '@mui/x-date-pickers';
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import TextField from '@mui/material/TextField';
 export default function ListItem({ coupon, setCoupons }) {
     const [open, setOpen] = useState(false);
     const [name, setName] = useState("");
     const [discount, setDiscount] = useState("");
+    
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    // const [startDate, setStartDate] = useState(new Date());
+    // const [endDate, setEndDate] = useState(tomorrow);
+
+    const [startDate, setStartDate] = useState(new Date(coupon.startDate));
+    const [endDate, setEndDate] = useState(new Date(coupon.endDate));
+
+    console.log(startDate, endDate)
+
     const handleStartDate = (newValue) => {
         setStartDate(newValue);
     };
     const handleEndDate = (newValue) => {
         setEndDate(newValue);
     };
+
     const input = useRef(null);
     const handleRemove = async (id) => {
         try {
@@ -62,7 +78,24 @@ export default function ListItem({ coupon, setCoupons }) {
                         onChange={(e) => setDiscount(e.target.value)}
                         disabled={!open}
                     />
-                
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DesktopDatePicker
+                            label="Start Date"
+                            inputFormat="MM/dd/yyyy"
+                            value={startDate}
+                            onChange={handleStartDate}
+                            renderInput={(params) => <TextField {...params} />}
+                            minDate={new Date()}
+                        />
+                        <DesktopDatePicker
+                            label="End Date"
+                            inputFormat="MM/dd/yyyy"
+                            value={endDate}
+                            onChange={handleEndDate}
+                            renderInput={(params) => <TextField {...params} />}
+                            minDate={tomorrow}
+                        />
+                    </LocalizationProvider>
                     <button
                         className={styles.btn}
                         onClick={() => handleUpdate(coupon._id)}
