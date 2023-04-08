@@ -11,6 +11,8 @@ import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { toast } from "react-toastify";
 import axios from "axios";
+import DialogModal from "../../../../components/dialogModal";
+import Images from "../../../../components/admin/createProduct/images";
 const initialState = {
     name: "",
     description: "",
@@ -92,9 +94,9 @@ export default function create({ parents, categories }) {
 
     const validate = Yup.object({
         name: Yup.string()
-        .required("Please add a name")
-        .min(10, "Product name must bewteen 10 and 300 characters.")
-        .max(300, "Product name must bewteen 10 and 300 characters."),
+            .required("Please add a name")
+            .min(10, "Product name must bewteen 10 and 300 characters.")
+            .max(300, "Product name must bewteen 10 and 300 characters."),
         brand: Yup.string().required("Please add a brand"),
         category: Yup.string().required("Please select a category."),
         sku: Yup.string().required("Please add a sku/number"),
@@ -121,6 +123,7 @@ export default function create({ parents, categories }) {
     return (
         <Layout>
             <div className={styles.header}>Create Product</div>
+            <DialogModal></DialogModal>
             <Formik
                 enableReinitialize
                 initialValues={{
@@ -158,6 +161,14 @@ export default function create({ parents, categories }) {
                         ></span>
                     )}
                 </div>
+                <Images
+                    name="imageInputFile"
+                    header="Product Carousel Images"
+                    text="Add images"
+                    images={images}
+                    setImages={setImages}
+                    setColorImage={setColorImage}
+                />
                 <SingularSelect
                     name="parent"
                     value={product.parent}
