@@ -6,6 +6,7 @@ import Category from "../../../../models/Category";
 import SingularSelect from "../../../../components/selects/SingularSelect";
 import MultipleSelect from "../../../../components/selects/MultipleSelect";
 import AdminInput from "../../../../components/inputs/adminInput";
+import Colors from "../../../../components/admin/createProduct/colors";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
@@ -146,21 +147,7 @@ export default function create({ parents, categories }) {
         >
         {(formik) => (
             <Form>
-                <div className={styles.flex}>
-                    {product.color.image && (
-                        <img
-                        src={product.color.image}
-                        className={styles.image_span}
-                        alt=""
-                        />
-                    )}
-                    {product.color.color && (
-                        <span
-                        className={styles.color_span}
-                        style={{ background: `${product.color.color}` }}
-                        ></span>
-                    )}
-                </div>
+               
                 <Images
                     name="imageInputFile"
                     header="Product Carousel Images"
@@ -197,6 +184,27 @@ export default function create({ parents, categories }) {
                         handleChange={handleChange}
                     />
                 )}
+                <div className={styles.flex}>
+                    {product.color.image && (
+                        <img
+                        src={product.color.image}
+                        className={styles.image_span}
+                        alt=""
+                        />
+                    )}
+                    {product.color.color && (
+                        <span
+                        className={styles.color_span}
+                        style={{ background: `${product.color.color}` }}
+                        ></span>
+                    )}
+                </div>
+                <Colors
+                    name="color"
+                    product={product}
+                    setProduct={setProduct}
+                    colorImage={colorImage}
+                />
                 <div className={styles.header}>Basic Infos</div>
                     <AdminInput
                         type="text"

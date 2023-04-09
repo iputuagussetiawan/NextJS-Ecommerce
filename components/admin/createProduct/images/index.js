@@ -18,10 +18,12 @@ export default function Images({
   const dispatch = useDispatch();
   const fileInput = useRef(null);
   const [meta, field] = useField(props);
+
   const handleImages = (e) => {
     let files = Array.from(e.target.files);
     files.forEach((img, i) => {
-      if (images.length == 6) {
+    console.log(images.length);
+      if (images.length === 6) {
         dispatch(
           showDialog({
             header: "Maximu 6 images are allowed.",
