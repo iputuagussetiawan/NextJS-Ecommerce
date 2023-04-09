@@ -7,6 +7,7 @@ import SingularSelect from "../../../../components/selects/SingularSelect";
 import MultipleSelect from "../../../../components/selects/MultipleSelect";
 import AdminInput from "../../../../components/inputs/adminInput";
 import Colors from "../../../../components/admin/createProduct/colors";
+import Style from "../../../../components/admin/createProduct/style";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
@@ -201,6 +202,12 @@ export default function create({ parents, categories }) {
                 </div>
                 <Colors
                     name="color"
+                    product={product}
+                    setProduct={setProduct}
+                    colorImage={colorImage}
+                />
+                <Style
+                    name="styleInput"
                     product={product}
                     setProduct={setProduct}
                     colorImage={colorImage}
