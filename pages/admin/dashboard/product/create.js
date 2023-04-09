@@ -8,6 +8,7 @@ import MultipleSelect from "../../../../components/selects/MultipleSelect";
 import AdminInput from "../../../../components/inputs/adminInput";
 import Colors from "../../../../components/admin/createProduct/colors";
 import Style from "../../../../components/admin/createProduct/style";
+import Sizes from "../../../../components/admin/createProduct/clickToAdd/Sizes";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
@@ -148,7 +149,6 @@ export default function create({ parents, categories }) {
         >
         {(formik) => (
             <Form>
-               
                 <Images
                     name="imageInputFile"
                     header="Product Carousel Images"
@@ -165,7 +165,6 @@ export default function create({ parents, categories }) {
                     header="Add to an existing product"
                     handleChange={handleChange}
                 />
-
                 <SingularSelect
                     name="category"
                     value={product.category}
@@ -247,6 +246,11 @@ export default function create({ parents, categories }) {
                         name="discount"
                         placholder="Product discount"
                         onChange={handleChange}
+                    />
+                    <Sizes
+                        sizes={product.sizes}
+                        product={product}
+                        setProduct={setProduct}
                     />
                 <button
                     className={`${styles.btn} ${styles.btn__primary} ${styles.submit_btn}`}
