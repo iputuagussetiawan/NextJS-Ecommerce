@@ -10,7 +10,7 @@ export default function cart() {
       <div className={styles.cart}>
         {cart.cartItems.length > 1 ? (
           <div className={styles.cart__container}>
-           {cart.cartItems.map((product) => (
+          {cart.cartItems.map((product) => (
                 <Product
                   product={product}
                   key={product._uid}
